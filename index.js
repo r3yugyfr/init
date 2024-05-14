@@ -1,15 +1,13 @@
-function removeNthFromEnd(head, n) {
-  const dummy = new ListNode(0);
-  dummy.next = head;
-  let first = dummy;
-  let second = dummy;
-  for (let i = 0; i <= n; i++) {
-    first = first.next;
+function maxSlidingWindow(nums, k) {
+  const result = [];
+  const queue = [];
+  for (let i = 0; i < nums.length; i++) {
+    while (queue.length && nums[i] >= nums[queue[queue.length - 1]]) {
+      queue.pop();
+    }
+    queue.push(i);
+    if (queue[0] === i - k) queue.shift();
+    if (i >= k - 1) result.push(nums[queue[0]]);
   }
-  while (first !== null) {
-    first = first.next;
-    second = second.next;
-  }
-  second.next = second.next.next;
-  return dummy.next;
+  return result;
 }
